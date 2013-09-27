@@ -1,4 +1,4 @@
-require './Poker'
+require './lib/Poker'
 
 describe Card do
   it "should have a value" do
