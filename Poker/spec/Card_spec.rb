@@ -6,8 +6,8 @@ describe Card do
     card.value.should == 4
   end
 
-  it "should have a suite" do
+  it "should have a suit" do
     card = Card.new("C", 5)
-    card.suite.should == "C"
+    card.suit.should == "C"
   end
 end

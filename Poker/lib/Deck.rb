@@ -8,12 +8,12 @@ class Deck < Array
   private
 
   def create_cards
-    suites = ["C","S","D","H"]
+    suits = ["C","S","D","H"]
     values = (2..14).to_a
 
-    suites.each do |suite|
+    suits.each do |suit|
       values.each do |value|
-        self << Card.new(suite, value)
+        self << Card.new(suit, value)
       end
     end
   end
