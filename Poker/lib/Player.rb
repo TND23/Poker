@@ -14,8 +14,44 @@ class Player
     draw_cards
   end
 
-  def raise(amount)
+  def play
+    puts "Would you like to check, bet, or call"
+    decision = gets.chomp
+    if decision == "raise"
+      bet
+    elsif decision == "fold"
+      fold
+    elsif decision == "call"
+      call
+    end
+    "That wasn't an option"
+    play
+  end
+
+  def bet(*amount)
+    if amount.nil?
+      puts "How much would you like to bet?"
+      amount = gets.chomp.to_i
+      if amount <= 0
+        puts "That's not a bet."
+        play
+      else
+        reduce_pot(amount)
+      end
+    elsif amount.join.to_i <= 0
+      puts "That's not a bet."
+      play
+    else
+      reduce_pot(amount.join.to_i)
+    end
+  end
+
+  def call(amount)
     reduce_pot(amount)
+  end
+
+  def fold
+    hand.clear
   end
 
   private
@@ -25,6 +61,7 @@ class Player
       hand << deck.pop
     end
   end
+
 
   def discard_cards(indices)
     indices.each do |idx|

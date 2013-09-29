@@ -18,7 +18,6 @@ describe Player do
     player.pot.size.should == 1000
   end
 
-
   it "has a deck" do
     player.deck.should_not be_nil
   end
@@ -33,10 +32,15 @@ describe Player do
     player.hand.should_not == old_hand
   end
 
-  it "can raise" do
+  it "can bet" do
     player.pot = Pot.new
-    player.raise(100)
+    player.bet(100)
     player.pot.size.should == 900
+  end
+
+  it "can fold" do
+    player.fold
+    player.hand.should == []
   end
 
 
