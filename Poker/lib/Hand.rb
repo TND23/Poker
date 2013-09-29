@@ -9,6 +9,43 @@ class Hand < Array
     @value = cards_worth
   end
 
+  def same_hand?(hand_one, hand_two)
+    self.hand_one.find_value == self.hand_two.find_value
+  end
+
+  def self.order_hand(hand)
+      hand.group_by{|value| hand.count(value)}
+  end
+
+  def self.hand_dup(hand)
+    [].tap do |new_hand|
+      hand.each do |card|
+        new_hand << card
+      end
+    end
+  end
+
+  #refactor this
+  def self.compare_same_hands(hand_one, hand_two)
+      dup_one = hand_dup(hand_one) ; dup_two = hand_dup(hand_two)
+      dup_one, dup_two = order_hand(dup_one), order_hand(dup_two)
+      ordered_keys = dup_one.each_key.sort
+      ordered_keys.sort
+      ordered_keys.each do |key|
+        return dup_one[key].pop.value > dup_two[key].pop.value ? hand_one : hand_two
+      end
+    return "Draw"
+  end
+
+  def self.winner(hand_one, hand_two)
+    unless hand_one.find_value == hand_two.find_value
+      return hand_one.find_value > hand_two.find_value ? hand_one : hand_two
+    else
+      return compare_same_hands(hand_one,hand_two)
+    end
+  end
+
+
   private
 
   def cards_worth

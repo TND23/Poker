@@ -1,15 +1,21 @@
 class Player
-  attr_accessor :deck
+  attr_accessor :deck, :pot
   attr_reader :hand
 
-  def initialize(deck, hand)
-    @deck, @hand = deck, Hand.new
+  #assumes no rebuys
+
+  def initialize(deck, hand, pot)
+    @deck, @hand, @pot = deck, Hand.new, Pot.new
     draw_cards
   end
 
   def exchange_cards(indices)
     discard_cards(indices)
     draw_cards
+  end
+
+  def raise(amount)
+    reduce_pot(amount)
   end
 
   private
@@ -26,5 +32,17 @@ class Player
     end
 
     hand.reject! { |card| card.nil? }
+  end
+
+  def reduce_pot(amount)
+    pot.size -= amount
+  end
+
+end
+
+class Pot
+  attr_accessor :size
+  def initialize
+    @size = 1000
   end
 end
